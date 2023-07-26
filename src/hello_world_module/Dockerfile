@@ -49,3 +49,4 @@ RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc &&\
 
 ENTRYPOINT ["/bin/bash"]
 
+# CMD [ "ros2 launch examples_rclpy_minimal_publisher publisher.launch.py" ]

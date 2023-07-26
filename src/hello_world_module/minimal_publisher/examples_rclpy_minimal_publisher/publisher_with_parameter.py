@@ -23,13 +23,15 @@ class MinimalPublisher(Node):
     def __init__(self):
         super().__init__('minimal_publisher')
         
-        self.declare_parameter('init_topic', 'world')
-        self.declare_parameter('init_author', 'humble')
+        self.declare_parameter('init_topic', 'world - init')
+        self.declare_parameter('topic', 'world')
+        self.declare_parameter('talker', 'none')
         self.declare_parameter('content', 'content')
         
         # get initial parameters 
-        self.topic = self.get_parameter('init_topic').get_parameter_value().string_value
-        self.author = self.get_parameter('init_author').get_parameter_value().string_value
+        self.init_topic = self.get_parameter('init_topic').get_parameter_value().string_value
+        
+        self.talker = self.get_parameter('talker').get_parameter_value().string_value
         
         # get content from parameter server
         self.content = self.get_parameter('content').get_parameter_value().string_value
@@ -41,12 +43,19 @@ class MinimalPublisher(Node):
 
     def timer_callback(self):
         msg = String()
-        # msg.data = 'Hello World: %d' % self.i
+        
         self.content = self.get_parameter('content').get_parameter_value().string_value
-        msg.data = 'Hello - {} from <{}> - [{}]: {}'.format(self.topic, 
-                                                                    self.author, 
-                                                                    self.i, 
-                                                                    self.content)
+        self.topic = self.get_parameter('topic').get_parameter_value().string_value
+        
+        if self.i < 10:
+            topic = self.init_topic
+        else:
+            topic = self.topic
+        
+        msg.data = 'Hello - {} from <{}> - [{}]: {}'.format(topic, 
+                                                            self.talker, 
+                                                            self.i, 
+                                                            self.content)
         self.publisher_.publish(msg)
         self.get_logger().info('Publishing: "%s"' % msg.data)
         self.i += 1
