@@ -22,9 +22,9 @@ def generate_launch_description():
         default='publisher_param.yaml')
     publisher_dir = get_package_share_directory('examples_rclpy_minimal_publisher')
     
-    # config = os.path.join(publisher_dir, 'config', 'publisher_param.yaml')
+    config = os.path.join(publisher_dir, 'config', 'publisher_param.yaml')
     
-    config = '/workspace/src/hello_world_module/minimal_publisher/config/publisher_param.yaml'
+    # config = '/workspace/src/hello_world_module/minimal_publisher/config/publisher_param.yaml'
     
     ld = LaunchDescription()
     talker_node = Node(

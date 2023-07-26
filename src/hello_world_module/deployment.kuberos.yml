@@ -35,10 +35,10 @@ rosModules:
     rosParameters: 
       - name: launch-parameters
         type: key-value
-        valueFrom: minimal-publisher-params-custom
-      - name: minimal-publisher-params-custom
+        valueFrom: helloworld_launch_parameters
+      - name: minimal-publisher-params
         type: yaml
-        mountPath: /workspace/minimal_publisher/config
+        mountPath: /workspace/install/examples_rclpy_minimal_publisher/share/examples_rclpy_minimal_publisher/config/publisher_param.yaml
         valueFrom: helloworld_launch_parameters    
 
     staticFiles: 
@@ -48,7 +48,7 @@ rosModules:
         valueFrom: ml-weights-container
 
   - name: hello-world-listener
-    image: <Container Registry>/ros2_basic_examples/hello_world:v0
+    image: metagoto/ros2-basic-examples:v1-param
     entrypoint: ["ros2 run examples_rclpy_minimal_subscriber subscriber_lambda"]
 
     preference: [edge, onboard] # Preference for scheduler
@@ -65,10 +65,10 @@ rosParamMap:
   - name: helloworld-launch-parameters
     type: key-value
     data:
-      use_sim: false
+      init_topic:: 'Container World'
       use_rviz: false
 
-  - name: minimal-publisher-params_custom
+  - name: minimal-publisher-params
     type: yaml
     path: /workspace/kuberoscli/ros_deployment/config_files_hello_world/helloworld.yml
   
