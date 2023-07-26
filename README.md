@@ -7,12 +7,17 @@ This repos contains some basic ROS2 examples to show you how to
  - deploy to the KubeROS platform
 
 
-
 ## Examples
- - Hello world 
+ - Hello world
  - Add ints & Fibonacci
  - Turtlesim 
 
+
+## Container Images: 
+Hello world example: 
+ ```
+ docker pull metagoto/ros2-basic-examples:v1-param
+ ```
 
 ## Others
  
@@ -39,5 +44,3 @@ add following variables in `.devcontainer/docker-compose.yml`
 --- stderr: examples_rclpy_minimal_publisher
 /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
 ```
-
-
