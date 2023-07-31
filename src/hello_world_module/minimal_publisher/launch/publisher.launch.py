@@ -25,7 +25,7 @@ def generate_launch_description():
     config = os.path.join(publisher_dir, 'config', 'publisher_param.yaml')
     
     # config = '/workspace/src/hello_world_module/minimal_publisher/config/publisher_param.yaml'
-    config = '/workspace/config/minimal_publisher/publisher_param.yaml'
+    config = '/workspace/config/minimal_publisher/publisher-param.yaml'    
     
     ld = LaunchDescription()
     talker_node = Node(

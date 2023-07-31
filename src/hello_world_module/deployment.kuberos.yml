@@ -38,8 +38,8 @@ rosModules:
         valueFrom: helloworld_launch_parameters
       - name: minimal-publisher-params
         type: yaml
-        mountPath: /workspace/config/minimal_publisher/publisher_param.yaml
-        valueFrom: minimal-publisher-params.yaml  
+        mountPath: /workspace/config/minimal_publisher
+        valueFrom: publisher-param.yaml  
 
     staticFiles: 
       - name: ml-weights-container
@@ -68,10 +68,10 @@ rosParamMap:
       init_topic:: 'Container World'
       use_rviz: false
 
-  - name: minimal-publisher-params.yaml
+  - name: publisher-param.yaml
     type: yaml
     path: /workspace/kuberoscli/ros_deployment/config_files_hello_world/helloworld.yml
-  
+
 
 staticFileMap: 
   # Placeholder, not included in this test version
