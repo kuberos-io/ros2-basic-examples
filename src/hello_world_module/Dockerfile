@@ -44,6 +44,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
 
 WORKDIR /workspace
 COPY --from=HumbleBase /workspace/install /workspace/install
+COPY hello_world_module/minimal_publisher/config /workspace/config/minimal_publisher
 RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc &&\
     echo "source /workspace/install/setup.bash" >> /root/.bashrc
 
