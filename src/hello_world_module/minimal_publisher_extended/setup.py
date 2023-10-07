@@ -37,7 +37,7 @@ setup(
     entry_points={
         'console_scripts': [
             'publisher_with_param ='
-            ' examples_rclpy_minimal_publisher.publisher_with_parameter:main',
+            ' minimal_publisher_extended.publisher_with_parameter:main',
         ],
     },
 )
