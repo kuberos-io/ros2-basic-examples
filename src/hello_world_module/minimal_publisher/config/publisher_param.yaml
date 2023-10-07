@@ -1,5 +1,0 @@
-minimal_publisher:
-  ros__parameters:
-    topic: 'world'
-    talker: 'humble'
-    content: 'launched by kuberos with custom parameter 2'
