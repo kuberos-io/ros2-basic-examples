@@ -2,4 +2,4 @@ minimal_publisher:
   ros__parameters:
     topic: 'world from container'
     talker: 'humble'
-    content: 'launched by kuberos with custom parameter'
+    content: 'default content in pkg (dev)'
