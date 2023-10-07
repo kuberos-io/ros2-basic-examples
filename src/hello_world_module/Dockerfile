@@ -5,7 +5,9 @@ FROM ros:${ROS_VERSION}-ros-base as HumbleBase
 SHELL ["/bin/bash", "-c"]
 
 
-# Install build dependencies 
+##############################################################
+####                     ROS Packages                     ####
+##############################################################
 RUN DEBIAN_FRONTEND=noninteractive \
     apt-get update \
     && apt-get install -y -qq --no-install-recommends \
@@ -15,14 +17,14 @@ RUN DEBIAN_FRONTEND=noninteractive \
     rm -rf /var/lib/apt/lists/*
 
 
-# COPY File to workspace
-WORKDIR /workspace
-COPY . /workspace/src/
-COPY shared_module /workspace/src/shared_module
-
+##############################################################
+####                     Source Code                      ####
+##############################################################
+WORKDIR /ws
+ADD . /ws/src
 
 # Build
-RUN cd /workspace &&\
+RUN cd /ws &&\
     apt-get update &&\
     rosdep install -i --from-path src --rosdistro humble -y &&\
     rm -rf /var/lib/apt/lists/* &&\
@@ -30,8 +32,12 @@ RUN cd /workspace &&\
     colcon build
 
 
-# STAGE 2: Create runtime image
-FROM ros:${ROS_VERSION}-ros-base
+
+##############################################################
+####           STAGE 2: Runtime Image                     ####
+##############################################################
+# Use the ros-core to optimize the image size
+FROM ros:${ROS_VERSION}-ros-core
 
 # Install runtime dependecies
 RUN DEBIAN_FRONTEND=noninteractive \
@@ -42,12 +48,13 @@ RUN DEBIAN_FRONTEND=noninteractive \
     libssl-dev && \
     rm -rf /var/lib/apt/lists/*
 
-WORKDIR /workspace
-COPY --from=HumbleBase /workspace/install /workspace/install
-COPY hello_world_module/minimal_publisher/config /workspace/config/minimal_publisher
-RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc &&\
-    echo "source /workspace/install/setup.bash" >> /root/.bashrc
+WORKDIR /ws
+COPY --from=HumbleBase /ws/install /ws/install
 
-ENTRYPOINT ["/bin/bash"]
+# RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc &&\
+#     echo "source /ws/install/setup.bash" >> /root/.bashrc
 
-# CMD [ "ros2 launch examples_rclpy_minimal_publisher publisher.launch.py" ]
+ADD entrypoint.sh /
+ENTRYPOINT ["/entrypoint.sh"]
+
+CMD ros2 launch minimal_publisher_extended publisher.launch.py init_topic:='CMD in Dockerfile'
