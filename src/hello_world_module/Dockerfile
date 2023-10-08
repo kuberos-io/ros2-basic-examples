@@ -48,6 +48,11 @@ RUN DEBIAN_FRONTEND=noninteractive \
     libssl-dev && \
     rm -rf /var/lib/apt/lists/*
 
+# # CycloneDDS
+RUN apt-get update && \
+    apt -y install ros-${ROS_DISTRO}-rmw-cyclonedds-cpp && \
+    rm -rf /var/lib/apt/lists/*
+
 WORKDIR /ws
 COPY --from=HumbleBase /ws/install /ws/install
 
